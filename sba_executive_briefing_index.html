@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBA Executive Briefing | Korn Ferry Simulation Assessments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d1b2e;
+      --navy2: #1a2e45;
+      --gold: #b8935a;
+      --red: #c0392b;
+      --red-light: #fdf2f2;
+      --green: #1a6b3c;
+      --green-light: #eaf3de;
+      --cream: #f5f0e8;
+      --cream2: #ede7d9;
+      --text: #1a1a1a;
+      --text2: #4a4a4a;
+      --text3: #7a7a7a;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(13, 27, 46, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    .app { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 250px;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .sidebar-header { padding: 28px 22px 22px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-logo {
+      font-family: 'Libre Baskerville', serif;
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .sidebar-sub {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .sidebar-nav { flex: 1; overflow-y: auto; padding: 16px 0; }
+    .nav-section-label {
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 22px 6px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 22px;
+      color: rgba(255,255,255,0.62);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .nav-item:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .nav-item.active { color: var(--white); background: rgba(184,147,90,0.15); }
+    .nav-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+    .nav-item.active .nav-dot { background: var(--gold); }
+    .sidebar-footer {
+      padding: 18px 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .badge-gold, .badge-red {
+      display: inline-block;
+      width: fit-content;
+      color: white;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 3px;
+    }
+    .badge-gold { background: var(--gold); }
+    .badge-red { background: var(--red); }
+    .sidebar-note {
+      color: rgba(255,255,255,0.58);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .main { flex: 1; overflow-y: auto; background: var(--cream); }
+    .section { display: none; padding: 52px 56px 72px; max-width: 1080px; }
+    .section.active { display: block; }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .section-title, .hero-title {
+      font-family: 'Libre Baskerville', serif;
+      color: var(--navy);
+      line-height: 1.15;
+    }
+    .section-title { font-size: 30px; }
+    .hero-title { font-size: 38px; max-width: 900px; }
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin: 20px 0 30px;
+      max-width: 140px;
+    }
+    .sub-heading {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 18px;
+      color: var(--navy);
+      margin: 34px 0 14px;
+    }
+    .hero-sub {
+      max-width: 760px;
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--text2);
+      margin-top: 16px;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .meta-pill {
+      background: white;
+      border: 1px solid var(--cream2);
+      border-radius: 20px;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--text2);
+    }
+
+    .prose { max-width: 760px; }
+    .prose p {
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--text2);
+      margin-bottom: 14px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 16px;
+      margin: 30px 0 14px;
+    }
+    .stat-card {
+      background: white;
+      border: 1px solid var(--cream2);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .stat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text3);
+    }
+    .stat-value {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 28px;
+      color: var(--navy);
+      margin: 8px 0 6px;
+    }
+    .stat-delta {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text2);
+    }
+    .val-green { color: var(--green); }
+    .val-red { color: var(--red); }
+
+    .signal-band {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+      margin: 28px 0;
+    }
+
+    .callout, .alert, .white-card, .dark-block, .insight-card, .timeline-card, .audience-card {
+      border-radius: 8px;
+    }
+    .callout {
+      border-left: 3px solid var(--gold);
+      background: white;
+      padding: 18px 22px;
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text2);
+      box-shadow: var(--shadow);
+    }
+    .callout-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .alert {
+      border-left: 3px solid var(--red);
+      background: var(--red-light);
+      padding: 18px 22px;
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text2);
+    }
+    .alert-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      margin-bottom: 6px;
+    }
+    .dark-block {
+      background: var(--navy);
+      padding: 34px 38px;
+      max-width: 760px;
+      margin: 30px 0;
+      box-shadow: var(--shadow);
+    }
+    .dark-question {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 22px;
+      color: white;
+      line-height: 1.45;
+      margin: 10px 0 14px;
+    }
+    .dark-text p {
+      font-size: 13px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 10px;
+    }
+
+    .white-card {
+      background: white;
+      border: 1px solid var(--cream2);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin: 20px 0;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .data-table, .signal-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+      background: white;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .data-table th, .signal-table th {
+      background: var(--navy);
+      color: white;
+      padding: 11px 14px;
+      text-align: left;
+      font-weight: 500;
+    }
+    .data-table td, .signal-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--cream2);
+      vertical-align: top;
+      line-height: 1.65;
+      background: white;
+    }
+    .data-table tr:last-child td, .signal-table tr:last-child td { border-bottom: none; }
+
+    .comp-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+    .comp-tag {
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: var(--cream2);
+      color: var(--text2);
+    }
+    .comp-tag.primary { background: var(--gold); color: white; }
+
+    .insight-grid, .audience-grid, .level-grid, .process-grid {
+      display: grid;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .insight-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .audience-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .level-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .process-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .insight-card, .audience-card, .timeline-card {
+      background: white;
+      border: 1px solid var(--cream2);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .insight-number, .timeline-step {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .insight-title, .audience-title, .timeline-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 17px;
+      line-height: 1.4;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .insight-text, .audience-text, .timeline-text {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text2);
+    }
+
+    .acc-wrap { max-width: 820px; margin: 22px 0; }
+    .acc-item {
+      border: 1px solid var(--cream2);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      background: white;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .acc-header {
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .acc-header:hover { background: var(--cream); }
+    .acc-arrow {
+      font-size: 10px;
+      color: var(--text3);
+      transition: transform 0.2s;
+      margin-left: 16px;
+    }
+    .acc-arrow.open { transform: rotate(180deg); }
+    .acc-body {
+      display: none;
+      padding: 0 18px 16px;
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text2);
+    }
+    .acc-body.open { display: block; }
+
+    .impact-block {
+      background: white;
+      border: 1px solid var(--cream2);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 20px 0;
+      box-shadow: var(--shadow);
+    }
+    .impact-number {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .impact-statement {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 16px;
+      color: var(--navy);
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+    .impact-rating-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+    }
+    .impact-level { border-radius: 6px; padding: 14px; }
+    .impact-level.weak { background: var(--red-light); }
+    .impact-level.solid { background: #fff9f0; }
+    .impact-level.strong { background: var(--green-light); }
+    .impact-level-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .impact-level.weak .impact-level-label { color: var(--red); }
+    .impact-level.solid .impact-level-label { color: #b45309; }
+    .impact-level.strong .impact-level-label { color: var(--green); }
+    .impact-level-text { font-size: 12px; line-height: 1.6; color: var(--text2); }
+
+    .footer-source {
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--cream2);
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--text3);
+      max-width: 820px;
+    }
+
+    @media (max-width: 1100px) {
+      .kpi-grid, .insight-grid, .level-grid, .process-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .signal-band, .two-col, .audience-grid, .impact-rating-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      .app { display: block; }
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+      .section { padding: 32px 20px 48px; }
+      .hero-title { font-size: 30px; }
+      .section-title { font-size: 26px; }
+      .kpi-grid, .insight-grid, .audience-grid, .level-grid, .process-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">SBA Executive Briefing</div>
+        <div class="sidebar-sub">Korn Ferry Simulation Assessments</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Briefing</div>
+        <div class="nav-item active" onclick="show('overview', this)"><span class="nav-dot"></span>What matters now</div>
+        <div class="nav-item" onclick="show('proof', this)"><span class="nav-dot"></span>Proof of impact</div>
+        <div class="nav-item" onclick="show('enterprise', this)"><span class="nav-dot"></span>Enterprise leadership</div>
+        <div class="nav-item" onclick="show('method', this)"><span class="nav-dot"></span>Why simulations</div>
+        <div class="nav-item" onclick="show('portfolio', this)"><span class="nav-dot"></span>Assessment portfolio</div>
+        <div class="nav-item" onclick="show('experience', this)"><span class="nav-dot"></span>Client experience</div>
+        <div class="nav-item" onclick="show('actions', this)"><span class="nav-dot"></span>Commercial angles</div>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="badge-gold">Executive briefing</span>
+        <div class="sidebar-note">Designed as a web-native sales page for executive review, internal prep, or client follow-up.</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section id="overview" class="section active">
+        <div class="eyebrow">Executive summary</div>
+        <div class="hero-title">Simulation-based assessment gives Korn Ferry a sharper readiness story and a stronger commercial case.</div>
+        <div class="section-divider"></div>
+        <div class="hero-sub">The deck supports a simple argument: Korn Ferry can help clients make better senior talent decisions because it measures leadership in context, not just on paper. The strongest narrative is not the mechanics of assessment. It is the business consequence of better succession, promotion, and development decisions.</div>
+
+        <div class="meta-row">
+          <div class="meta-pill">Use case: sales conversation</div>
+          <div class="meta-pill">Audience: senior client stakeholders</div>
+          <div class="meta-pill">Positioning: readiness + ROI + fairness</div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="stat-card">
+            <div class="stat-label">Validity coefficient</div>
+            <div class="stat-value">0.55</div>
+            <div class="stat-delta val-green">Korn Ferry in-depth assessment with simulations</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Relative accuracy</div>
+            <div class="stat-value">+96%</div>
+            <div class="stat-delta val-green">Versus industry average high-touch solution</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Revenue growth</div>
+            <div class="stat-value">+20%</div>
+            <div class="stat-delta">Higher financial outcomes for high-scoring CEOs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Market cap growth</div>
+            <div class="stat-value">+109%</div>
+            <div class="stat-delta">Also framed in the deck as 2x higher growth over tenure</div>
+          </div>
+        </div>
+
+        <div class="signal-band">
+          <div class="dark-block">
+            <div class="eyebrow" style="color: var(--gold);">The commercial question</div>
+            <div class="dark-question">What if the client could see a leader in action before making a promotion or succession bet?</div>
+            <div class="dark-text">
+              <p>This is the core message that differentiates simulation-based assessment from test-plus-interview approaches. It reframes the offer from assessment as diagnosis to assessment as risk reduction.</p>
+              <p>For a client, the value is confidence. For a seller, the value is a much clearer bridge from methodology to business outcome.</p>
+            </div>
+          </div>
+          <div class="callout">
+            <div class="callout-label">What matters now</div>
+            The page should lead with three promises: better prediction, clearer readiness signals, and stronger business performance after appointment. Everything else supports those claims.
+          </div>
+        </div>
+
+        <div class="insight-grid">
+          <div class="insight-card">
+            <div class="insight-number">Signal 01</div>
+            <div class="insight-title">The argument is strongest when framed around enterprise-level leadership.</div>
+            <div class="insight-text">The deck links performance outcomes to leaders who can move beyond functional or regional boundaries and act for the enterprise as a whole.</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-number">Signal 02</div>
+            <div class="insight-title">The evidence is more persuasive than the process.</div>
+            <div class="insight-text">Validity coefficients and firm-performance outcomes are stronger anchors than long descriptions of assessment steps.</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-number">Signal 03</div>
+            <div class="insight-title">The offer is both evaluative and developmental.</div>
+            <div class="insight-text">The deck repeatedly shows that simulations do not just sort talent. They also accelerate development and improve role-fit decisions.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="proof" class="section">
+        <div class="eyebrow">Evidence and impact</div>
+        <div class="section-title">The proof points are strong enough to anchor the whole pitch.</div>
+        <div class="section-divider"></div>
+
+        <div class="prose">
+          <p>The most commercially valuable material in the deck is the combination of predictive validity data and downstream business performance. Together they allow a seller to move from “our method is better” to “better decisions show up in firm outcomes.”</p>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Assessment approach</th><th>Validity coefficient</th><th>Commercial implication</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Korn Ferry integrated assessment without simulations</td><td>0.33</td><td>Already above the industry average cited in the deck</td></tr>
+            <tr><td>Industry average with simulations</td><td>0.28</td><td>Useful comparison baseline for differentiation</td></tr>
+            <tr><td>Korn Ferry in-depth assessment with simulations</td><td class="val-green">0.55</td><td>Most persuasive proof point for readiness-led premium positioning</td></tr>
+          </tbody>
+        </table>
+
+        <div class="impact-block">
+          <div class="impact-number">Business impact</div>
+          <div class="impact-statement">High overall competency scores are associated in the deck with stronger CEO financial outcomes, making the assessment story materially relevant to succession and appointment decisions.</div>
+          <div class="impact-rating-grid">
+            <div class="impact-level weak">
+              <div class="impact-level-label">Basic framing</div>
+              <div class="impact-level-text">Assessment improves selection confidence and development planning.</div>
+            </div>
+            <div class="impact-level solid">
+              <div class="impact-level-label">Stronger framing</div>
+              <div class="impact-level-text">Assessment predicts readiness better than competing approaches and reduces promotion risk.</div>
+            </div>
+            <div class="impact-level strong">
+              <div class="impact-level-label">Best framing</div>
+              <div class="impact-level-text">Assessment quality is linked to post-succession financial outcomes, not just cleaner talent discussions.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="white-card">
+            <div class="sub-heading" style="margin-top:0;">Financial outcome signals</div>
+            <div class="comp-row">
+              <span class="comp-tag primary">+26% EBITDA margin</span>
+              <span class="comp-tag">+20% revenue growth</span>
+              <span class="comp-tag">+109% market capitalization growth</span>
+              <span class="comp-tag">2x market cap growth over tenure</span>
+            </div>
+            <div class="prose">
+              <p>The deck also notes that eight competencies are positively associated with all three financial outcomes, grouped into four capability factors of Enterprise Leadership. That creates a bridge from abstract leadership language to measurable value creation.</p>
+            </div>
+          </div>
+          <div class="alert">
+            <div class="alert-label">Seller discipline</div>
+            Avoid overloading the client with every metric at once. Use one validity comparison and one business-outcome proof point, then translate them into the client’s actual decision: succession, promotion, development investment, or role fit.
+          </div>
+        </div>
+      </section>
+
+      <section id="enterprise" class="section">
+        <div class="eyebrow">Leadership thesis</div>
+        <div class="section-title">The deck’s real intellectual center is Enterprise Leadership.</div>
+        <div class="section-divider"></div>
+
+        <div class="dark-block">
+          <div class="eyebrow" style="color: var(--gold);">Core idea</div>
+          <div class="dark-question">Clients do not need more sophisticated executive managers. They need leaders who can transcend functional, geographic, and organizational boundaries in service of enterprise value creation.</div>
+          <div class="dark-text">
+            <p>This is the strategic language that elevates the offer above standard assessment. It tells the client that the problem is not just capability depth. It is enterprise-level judgment.</p>
+          </div>
+        </div>
+
+        <div class="prose">
+          <p>For the HTML page, this section should work as the conceptual bridge between evidence and offer. It explains why simulation matters: because enterprise leadership is hard to infer from interviews alone. It must be observed under tension, ambiguity, and competing stakeholder demands.</p>
+        </div>
+
+        <div class="insight-grid">
+          <div class="insight-card">
+            <div class="insight-number">Capability factor 01</div>
+            <div class="insight-title">Boundary crossing</div>
+            <div class="insight-text">Can the leader act beyond the incentives of their function, geography, or business unit?</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-number">Capability factor 02</div>
+            <div class="insight-title">Decision quality under complexity</div>
+            <div class="insight-text">Can the leader make sound calls when tradeoffs are strategic, political, and time-sensitive?</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-number">Capability factor 03</div>
+            <div class="insight-title">Enterprise value orientation</div>
+            <div class="insight-text">Can the leader align action to the broader value-creating purpose of the enterprise and its ecosystem?</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="method" class="section">
+        <div class="eyebrow">Offer logic</div>
+        <div class="section-title">Simulation is persuasive because it lets the client observe future-role behavior, not infer it.</div>
+        <div class="section-divider"></div>
+
+        <div class="prose">
+          <p>The deck compares business simulations to a flight simulator. That is a useful metaphor because it compresses the benefit into one idea: leaders are put into realistic role conditions before they are promoted into the role itself.</p>
+        </div>
+
+        <div class="acc-wrap">
+          <div class="acc-item">
+            <div class="acc-header" onclick="toggleAcc(this)">What the simulations do well <span class="acc-arrow">▼</span></div>
+            <div class="acc-body">
+              They immerse participants in business situations, role-specific challenges, and strategic choices typical of the target level. The deck emphasizes that this goes beyond self-report and creates a more even playing field across talent populations.
+            </div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header" onclick="toggleAcc(this)">Why the method matters commercially <span class="acc-arrow">▼</span></div>
+            <div class="acc-body">
+              The more the client fears the cost of a wrong promotion or succession choice, the more simulation-based assessment becomes a risk-management product rather than an HR diagnostic.
+            </div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header" onclick="toggleAcc(this)">How to position fairness and development <span class="acc-arrow">▼</span></div>
+            <div class="acc-body">
+              The deck states that simulations create a fairer, more consistent playing field and lead to meaningful development insight. In a sales conversation, this lets the offer address both selection rigor and talent-development credibility.
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="white-card">
+            <div class="sub-heading" style="margin-top:0;">The four talent questions</div>
+            <table class="signal-table">
+              <thead><tr><th>Question</th><th>What the offer claims</th></tr></thead>
+              <tbody>
+                <tr><td>Performance</td><td>Can this leader deliver in the current context?</td></tr>
+                <tr><td>Potential</td><td>Can this leader grow into greater scope and complexity?</td></tr>
+                <tr><td>Readiness</td><td>Can this leader step into the target role now or soon?</td></tr>
+                <tr><td>Fit</td><td>Is this role right for the person’s style, background, and aspirations?</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <div class="callout-label">Positioning move</div>
+            State clearly that Korn Ferry’s in-depth assessment answers all four questions in one integrated architecture. That is more strategic than selling a collection of tools.
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio" class="section">
+        <div class="eyebrow">Assessment portfolio</div>
+        <div class="section-title">The level architecture helps a client see relevance to their own leadership pipeline.</div>
+        <div class="section-divider"></div>
+
+        <div class="prose">
+          <p>The deck covers four target levels, each tied to a realistic leadership context. In the HTML, these should not feel like catalog items. They should show how Korn Ferry tailors simulation design to the strategic burden of the role.</p>
+        </div>
+
+        <div class="level-grid">
+          <div class="audience-card">
+            <div class="audience-title">CEO Assessment</div>
+            <div class="audience-text">Target role: CEO of a Global 1000 company with multiple products and services, spanning mature, high-growth, and turnaround or divestiture situations.</div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-title">Senior Executive Assessment</div>
+            <div class="audience-text">Target role: President of the largest global business line inside a complex multi-business enterprise across B2B and B2C contexts.</div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-title">Business Unit Leader Assessment</div>
+            <div class="audience-text">Target role: General Manager with full P&amp;L ownership inside a global technology and communications context.</div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-title">Mid-Level Leader Assessment</div>
+            <div class="audience-text">Target role: Mid-manager of a product line in a computer and services company, facing more bounded but still meaningful leadership tradeoffs.</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-label">Why this matters in the sale</div>
+          The buyer should recognize their own population in the architecture. This section is less about inventory and more about helping the client see a pathway from critical roles to a fit-for-purpose assessment design.
+        </div>
+      </section>
+
+      <section id="experience" class="section">
+        <div class="eyebrow">Experience design</div>
+        <div class="section-title">The delivery model should read as both rigorous and participant-centered.</div>
+        <div class="section-divider"></div>
+
+        <div class="process-grid">
+          <div class="timeline-card">
+            <div class="timeline-step">Pre-assessment</div>
+            <div class="timeline-title">Set context and prepare the participant</div>
+            <div class="timeline-text">Kickoff communication, welcome call, pre-work, testing, questionnaire, and market interview where applicable.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-step">Assessment</div>
+            <div class="timeline-title">Observe the leader in action</div>
+            <div class="timeline-text">Behavioral interview, business simulations, and in some cases real-time coaching around role-relevant dilemmas.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-step">Post-assessment</div>
+            <div class="timeline-title">Turn insight into action</div>
+            <div class="timeline-text">Reporting, feedback and development session, and development planning meeting.</div>
+          </div>
+        </div>
+
+        <div class="audience-grid">
+          <div class="audience-card">
+            <div class="audience-title">For the participant</div>
+            <div class="audience-text">A realistic preview of the role, development guidance, role-fit insight, and an actionable individual development plan tied to future challenges.</div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-title">For the organization</div>
+            <div class="audience-text">Greater confidence in readiness decisions, richer data on leaders, more targeted development investment, faster onboarding, stronger engagement, and better retention.</div>
+          </div>
+        </div>
+
+        <div class="alert">
+          <div class="alert-label">Editing note</div>
+          The source deck includes an instruction to remove steps not included in the final client solution. In a live sales page, keep only the steps relevant to the specific offer configuration.
+        </div>
+      </section>
+
+      <section id="actions" class="section">
+        <div class="eyebrow">Commercial application</div>
+        <div class="section-title">How this page can be used in a sales conversation.</div>
+        <div class="section-divider"></div>
+
+        <div class="insight-grid">
+          <div class="insight-card">
+            <div class="insight-number">Angle 01</div>
+            <div class="insight-title">Succession risk</div>
+            <div class="insight-text">Use the evidence to show that the cost of a wrong CEO or enterprise-leader appointment is too high for low-fidelity evaluation methods.</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-number">Angle 02</div>
+            <div class="insight-title">Promotion readiness</div>
+            <div class="insight-text">Position simulations as the cleanest way to test whether a strong operator can actually perform at enterprise scale.</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-number">Angle 03</div>
+            <div class="insight-title">Development investment</div>
+            <div class="insight-text">Frame the offer as both decision support and accelerated development, making the spend easier to justify.</div>
+          </div>
+        </div>
+
+        <div class="white-card">
+          <div class="sub-heading" style="margin-top:0;">Recommended talk track</div>
+          <div class="prose">
+            <p>Lead with the client decision. Move next to the proof of predictive validity. Then connect that proof to financial outcomes. Only after that should you explain how the simulations work. The methodology matters, but it lands hardest once the economic case is already clear.</p>
+          </div>
+        </div>
+
+        <div class="footer-source">
+          Built from the uploaded June 2024 SBA pitch deck. Key source themes included Enterprise Leadership, assessment validity, post-succession financial outcomes, simulation design rationale, assessment levels, and participant-organization benefits.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function show(id, el) {
+      document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+      el.classList.add('active');
+      document.querySelector('.main').scrollTop = 0;
+    }
+
+    function toggleAcc(header) {
+      var body = header.nextElementSibling;
+      var arrow = header.querySelector('.acc-arrow');
+      var isOpen = body.classList.contains('open');
+      document.querySelectorAll('.acc-body').forEach(function(b) { b.classList.remove('open'); });
+      document.querySelectorAll('.acc-arrow').forEach(function(a) { a.classList.remove('open'); });
+      if (!isOpen) {
+        body.classList.add('open');
+        arrow.classList.add('open');
+      }
+    }
+  </script>
+</body>
+</html>
